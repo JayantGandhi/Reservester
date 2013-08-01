@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  database: reservester_development
+  username: huge
+  password: 
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: reservester_test
+  username: huge
+  password: 
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: postgresql
+  database: reservester_production
+  username: huge
+  password: 
+  pool: 5
+  timeout: 5000

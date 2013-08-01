@@ -1,0 +1,40 @@
+<h1>Restaurants</h1>
+<%= gmaps("map_options" => { :raw => "{scrollwheel: false}", "zoom" => 17, "auto_zoom" => true },"markers" => { "data" => @json }) %>
+<div id="index_table" class="span9">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Owner</th>
+        <th>Action</th>      
+      </tr>
+    </thead>
+    <tbody>
+      <% @restaurants.each do |restaurant| %>
+        <tr>
+          <td><%= image_tag restaurant.photo.thumbnail.url if restaurant.photo? %></td>
+          <td><%= link_to restaurant.name, restaurant %></td>
+          <td><%= restaurant.address %></td>
+          <td><%= restaurant.user.name%></td>
+          <td>
+            <%- if current_user %>
+                <div class="span1" id="options">
+                  <div><%= link_to "Reservations", restaurant_reservations_path(restaurant), class:"btn btn-mini"%></div>
+                  <div><%= link_to "Edit", edit_restaurant_path(restaurant), class:"btn btn-mini" %></div>
+                  <div><%= link_to "Delete", restaurant, confirm: "Are you sure you want to delete?", method: :delete, class:"btn btn-danger btn-mini"%></div>
+                </div>
+            <%- else %>
+              <%= link_to "Make Reservation", new_restaurant_reservation_path(restaurant), class:"btn btn-mini" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="span2" id="index_bar">
+  <%= link_to 'New Restaurant', new_restaurant_path, class:"btn" if user_signed_in? %>
+  <%= link_to "Categories", categories_path, class:"btn"%>
+</div>
